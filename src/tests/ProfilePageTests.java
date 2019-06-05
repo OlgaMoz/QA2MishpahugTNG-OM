@@ -42,13 +42,19 @@ public class ProfilePageTests extends TestBase {
     public void profileURGuestTest() throws InterruptedException {
         //-------------------change user role to Guest------
         driver.findElement(By.id("profile")).click();
-        Thread.sleep(2000);
+
+        waitUntilElementClickable(By.id("idbtneditprofile"),10);
         driver.findElement(By.id("idbtneditprofile")).click();
-        Thread.sleep(2000);
+
+        waitUntilElementClickable(By.id("typeuser1inprofile"),10);
         driver.findElement(By.id("typeuser1inprofile")).click();
-        Thread.sleep(2000);
+
+        waitUntilElemAttrContainsText(By.id("typeuser1inprofile"),
+                "class","activate",5);
         driver.findElement(By.id("idbtnsaveprofile")).click();
-        Thread.sleep(3000);
+
+        waitUntilElementClickable(By.id("idbtneditprofile"),10);
+
 
         //----------------user rights verification: '+' has to be unavailable ----------
         driver.findElement(By.id("ihome")).click();

@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -23,11 +25,15 @@ public class LoginPageTests extends TestBase{
         passwordField.sendKeys(PASSWORD);
         WebElement signInButton = driver.findElement(By.id("signinrequest"));
         signInButton.click();
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
+        waitUntilElementClickable(By.id("profile"),10);
         WebElement profileButton = driver.findElement(By.id("profile"));
         Assert.assertTrue(
                 profileButton.getAttribute("title").contains(LOGIN));
     }
+
+
+
 
     @Test
     public void loginNegative() throws InterruptedException {
@@ -45,14 +51,16 @@ public class LoginPageTests extends TestBase{
         passwordField.sendKeys("psw");
         WebElement signInButton = driver.findElement(By.id("signinrequest"));
         signInButton.click();
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
+        waitUntilElementIsVisible(By.id("wrongloginorpassword"),10);
 
         //------Receive wrong authorization message and close login window ------
         WebElement wrongAuthText = driver.findElement(By.id("wrongloginorpassword"));
         System.out.println("Wrong Authorization text: " + wrongAuthText.getText().contains("Wrong Authorization!"));
         WebElement closeLogin = driver.findElement(By.id("closedsignin"));
         closeLogin.click();
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
+        waitUntilElementClickable(By.id("idsignin"),10);
 
         //------- Home window (not authorized) verification -----------
         WebElement homeIcon = driver.findElements(By.className("navi-item")).get(0);
