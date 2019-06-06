@@ -50,7 +50,7 @@ public class ProfilePageTests extends TestBase {
         driver.findElement(By.id("typeuser1inprofile")).click();
 
         waitUntilElemAttrContainsText(By.id("typeuser1inprofile"),
-                "class","activate",5);
+                "class","active",5);
         driver.findElement(By.id("idbtnsaveprofile")).click();
 
         waitUntilElementClickable(By.id("idbtneditprofile"),10);
