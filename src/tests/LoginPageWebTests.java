@@ -15,6 +15,7 @@ public class LoginPageWebTests extends TestBase {
     public void loginPositive() throws InterruptedException {
 
         driver.findElement(By.id("idsignin")).click();
+        waitUntilElementClickable(By.id("signinrequest"),10);
         WebElement loginField = driver.findElement(By.id("logininput"));
         loginField.click();
         loginField.sendKeys(LOGIN);
@@ -23,7 +24,7 @@ public class LoginPageWebTests extends TestBase {
         passwordField.sendKeys(PASSWORD);
         WebElement signInButton = driver.findElement(By.id("signinrequest"));
         signInButton.click();
-        Thread.sleep(2000);
+        waitUntilElementClickable(By.id("profile"), 30);
         WebElement profileButton = driver.findElement(By.id("profile"));
 
         System.out.println("title of profileButton: "
@@ -37,7 +38,7 @@ public class LoginPageWebTests extends TestBase {
 
         //--------Login window openning----------------
         driver.findElement(By.id("idsignin")).click();
-        Thread.sleep(2000);
+        waitUntilElementClickable(By.id("signinrequest"),10);
 
         //------- Not correct login/password entering--------------------
         WebElement loginField = driver.findElement(By.id("logininput"));
@@ -48,14 +49,14 @@ public class LoginPageWebTests extends TestBase {
         passwordField.sendKeys("psw");
         WebElement signInButton = driver.findElement(By.id("signinrequest"));
         signInButton.click();
-        Thread.sleep(3000);
+        waitUntilElementIsVisible(By.id("wrongloginorpassword"),5);
 
         //------Receive wrong authorization message and close login window ------
         WebElement wrongAuthText = driver.findElement(By.id("wrongloginorpassword"));
         System.out.println("Wrong Authorization text: " + wrongAuthText.getText().contains("Wrong Authorization!"));
         WebElement closeLogin = driver.findElement(By.id("closedsignin"));
         closeLogin.click();
-        Thread.sleep(5000);
+        waitUntilElementClickable(By.id("idsignin"),20);
 
         //------- Home window (not authorized) verification -----------
         WebElement homeIcon = driver.findElements(By.className("navi-item")).get(0);
@@ -64,11 +65,6 @@ public class LoginPageWebTests extends TestBase {
         WebElement homeAuthIcon = driver.findElement(By.id("ihome"));
         WebElement profileIcon = driver.findElement(By.id("profile"));
 
-        System.out.println("Home icon is displayed: " + homeIcon.isDisplayed());
-        System.out.println("Login icon is displayed: " + loginIcon.isDisplayed());
-        System.out.println("Registration icon is displayed: " + registrationIcon.isDisplayed());
-        System.out.println("Home auth icon isn't displayed: " + !homeAuthIcon.isDisplayed());
-        System.out.println("Profile icon isn't displayed: " + !profileIcon.isDisplayed());
 
         Assert.assertTrue(homeIcon.isDisplayed());
         Assert.assertTrue(loginIcon.isDisplayed());

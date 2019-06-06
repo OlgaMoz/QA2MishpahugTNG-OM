@@ -58,7 +58,7 @@ public class ProfilePageTests extends TestBase {
 
         //----------------user rights verification: '+' has to be unavailable ----------
         driver.findElement(By.id("ihome")).click();
-        Thread.sleep(4000);
+        waitUntilElementClickable(By.xpath("//span[@id='typeviewsearchcalendar']"),10);
         System.out.println("Guest, + is  hidden: " + !driver.findElement(By.id("idcontainerbtnaddevent")).isDisplayed());
         Assert.assertFalse(driver.findElement(By.id("idcontainerbtnaddevent")).isDisplayed());
     }

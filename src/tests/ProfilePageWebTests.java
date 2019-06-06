@@ -31,7 +31,7 @@ public class ProfilePageWebTests extends TestBase{
         WebElement profileButton
                 = driver.findElement(By.id("profile"));
         profileButton.click();
-        Thread.sleep(2000);
+        waitUntilElementIsVisible(By.id("titleprofile"),10);
         WebElement titleProfile
                 = driver.findElement(By.id("titleprofile"));
         System.out.println("Title profile verification: "
