@@ -10,6 +10,7 @@ public class FamilyPageTests extends TestBase {
 
     @BeforeMethod
     public void loginToAppl() throws InterruptedException {
+
         driver.findElement(By.id("idsignin")).click();
         WebElement loginField = driver.findElement(By.id("logininput"));
         loginField.click();
@@ -32,11 +33,12 @@ public class FamilyPageTests extends TestBase {
         {
 
             driver.findElement(By.id("idbtneditprofile")).click();
-            Thread.sleep(4000);
+            waitUntilElementClickable(By.id("typeuser2inprofile"),15);
             driver.findElement(By.id("typeuser2inprofile")).click();
-            Thread.sleep(4000);
+            waitUntilElemAttrContainsText(By.id("typeuser2inprofile"),
+                    "class","active",5);
             driver.findElement(By.id("idbtnsaveprofile")).click();
-            Thread.sleep(5000);
+            waitUntilElementClickable(By.id("idbtneditprofile"),20);
         }
 
         //------- Profile fields values saving ----------------------------
@@ -46,7 +48,11 @@ public class FamilyPageTests extends TestBase {
 
         //-------Family fields values verification ------------------------
         driver.findElement(By.id("family")).click();
-        Thread.sleep(4000);
+        //Thread.sleep(4000);
+        waitUntilElementIsVisible(By.id("idbtnaddevent"),20);
+        waitUntilElementIsVisible(By.cssSelector("#fieldobjconfession"),15);
+
+
         int counter = 0;
         if (driver.findElement(By.cssSelector("#fieldobjconfession")).getText().equals(confessionProfile))
                                     counter++;
@@ -54,13 +60,14 @@ public class FamilyPageTests extends TestBase {
                                     counter++;
         if (driver.findElement(By.cssSelector("#fieldobjfoodPreferences")).getText().equals(foodProfile))
                                     counter++;
-       /* System.out.println("Confession verification: "
+
+        /*System.out.println("Confession verification: "
                 + driver.findElement(By.cssSelector("#fieldobjconfession")).getText().equals(confessionProfile));
         System.out.println("Languages verification: "
                 + driver.findElement(By.cssSelector("span[id='fieldobjlanguages']")).getText().equals(languagesProfile));
         System.out.println("Food verification: "
-                + driver.findElement(By.cssSelector("#fieldobjfoodPreferences")).getText().equals(foodProfile));
-        */
+                + driver.findElement(By.cssSelector("#fieldobjfoodPreferences")).getText().equals(foodProfile));*/
+
         Assert.assertEquals(3,counter);
     }
 }

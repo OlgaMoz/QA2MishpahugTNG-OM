@@ -13,6 +13,11 @@ import org.testng.annotations.Test;
 
 public class LoginPageTests extends TestBase{
 
+    @BeforeMethod
+    public void initTests(){
+        waitUntilElementClickable(By.id("idsignin"),20);
+    }
+
 
     @Test
     public void loginPositive() throws InterruptedException {
@@ -25,7 +30,6 @@ public class LoginPageTests extends TestBase{
         passwordField.sendKeys(PASSWORD);
         WebElement signInButton = driver.findElement(By.id("signinrequest"));
         signInButton.click();
-        //Thread.sleep(2000);
         waitUntilElementClickable(By.id("profile"),10);
         WebElement profileButton = driver.findElement(By.id("profile"));
         Assert.assertTrue(
@@ -51,7 +55,6 @@ public class LoginPageTests extends TestBase{
         passwordField.sendKeys("psw");
         WebElement signInButton = driver.findElement(By.id("signinrequest"));
         signInButton.click();
-        //Thread.sleep(3000);
         waitUntilElementIsVisible(By.id("wrongloginorpassword"),10);
 
         //------Receive wrong authorization message and close login window ------
@@ -59,7 +62,6 @@ public class LoginPageTests extends TestBase{
         System.out.println("Wrong Authorization text: " + wrongAuthText.getText().contains("Wrong Authorization!"));
         WebElement closeLogin = driver.findElement(By.id("closedsignin"));
         closeLogin.click();
-        //Thread.sleep(5000);
         waitUntilElementClickable(By.id("idsignin"),10);
 
         //------- Home window (not authorized) verification -----------

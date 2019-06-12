@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -11,8 +12,10 @@ import org.testng.annotations.Test;
 
 public class ProfilePageTests extends TestBase {
 
+
     @BeforeMethod
     public void loginToAppl() throws InterruptedException {
+        waitUntilElementClickable(By.id("idsignin"),20);
         driver.findElement(By.id("idsignin")).click();
         WebElement loginField = driver.findElement(By.id("logininput"));
         loginField.click();
@@ -22,7 +25,9 @@ public class ProfilePageTests extends TestBase {
         passwordField.sendKeys(PASSWORD);
         WebElement signInButton = driver.findElement(By.id("signinrequest"));
         signInButton.click();
-        Thread.sleep(4000);
+        //Thread.sleep(4000);
+        waitUntilElementClickable(By.id("profile"),20);
+        //builder = new Actions(driver);
     }
 
     @Test
@@ -31,7 +36,11 @@ public class ProfilePageTests extends TestBase {
         WebElement profileButton
                 = driver.findElement(By.id("profile"));
         profileButton.click();
-        Thread.sleep(2000);
+        waitUntilElementClickable(By.id("idbtneditprofile"),20);
+        //System.out.println("Text1: " + driver.findElement(By.id("titleprofile")).getText());
+        waitUntilElemContainsText(By.id("titleprofile"),"My Profile",20);
+        //System.out.println("Text2: " + driver.findElement(By.id("titleprofile")).getText());
+
         WebElement titleProfile
                 = driver.findElement(By.id("titleprofile"));
 
@@ -40,10 +49,16 @@ public class ProfilePageTests extends TestBase {
 
     @Test
     public void profileURGuestTest() throws InterruptedException {
+        Actions builder = new Actions(driver);
+
         //-------------------change user role to Guest------
         driver.findElement(By.id("profile")).click();
+        //waitUntilElementClickable(By.id("idbtnchangepassprofile"),10);
+        //driver.findElement(By.id("idbtnchangepassprofile")).click();
+        //waitUntilElementClickable(By.id("idbtnchangepasscancel"),15);
 
         waitUntilElementClickable(By.id("idbtneditprofile"),10);
+        builder.moveToElement(driver.findElement(By.id("idbtneditprofile"))).perform();
         driver.findElement(By.id("idbtneditprofile")).click();
 
         waitUntilElementClickable(By.id("typeuser1inprofile"),10);
@@ -65,38 +80,49 @@ public class ProfilePageTests extends TestBase {
 
     @Test
     public void profileURFamilyTest() throws InterruptedException {
+        Actions builder = new Actions(driver);
         //-------------------change user role to Guest------
         driver.findElement(By.id("profile")).click();
-        Thread.sleep(2000);
+        //waitUntilElementClickable(By.id("idbtnchangepassprofile"),15);
+        //driver.findElement(By.id("idbtnchangepassprofile")).click();
+        waitUntilElementClickable(By.id("idbtneditprofile"),15);
+
+        builder.moveToElement(driver.findElement(By.id("idbtneditprofile"))).perform();
         driver.findElement(By.id("idbtneditprofile")).click();
-        Thread.sleep(2000);
+        waitUntilElementClickable(By.id("typeuser2inprofile"),10);
         driver.findElement(By.id("typeuser2inprofile")).click();
-        Thread.sleep(2000);
+        waitUntilElemAttrContainsText(By.id("typeuser2inprofile"),
+                "class","active",10);
         driver.findElement(By.id("idbtnsaveprofile")).click();
-        Thread.sleep(3000);
+        waitUntilElementClickable(By.id("idbtneditprofile"),15);
 
         //----------------user rights verification: '+' has to be unavailable ----------
         driver.findElement(By.id("ihome")).click();
-        Thread.sleep(4000);
+        waitUntilElementClickable(By.xpath("//span[@id='typeviewsearchcalendar']"),10);
         System.out.println("Family, + is  displayed: " + driver.findElement(By.id("idcontainerbtnaddevent")).isDisplayed());
         Assert.assertTrue(driver.findElement(By.id("idcontainerbtnaddevent")).isDisplayed());
     }
 
     @Test
-    public void profileURFamilyAndGustTest() throws InterruptedException {
+    public void profileURFamilyAndGustTest()  {
+        Actions builder = new Actions(driver);
         //-------------------change user role to Guest------
         driver.findElement(By.id("profile")).click();
-        Thread.sleep(2000);
+        //waitUntilElementClickable(By.id("idbtnchangepassprofile"),15);
+       // driver.findElement(By.id("idbtnchangepassprofile")).click();
+        waitUntilElementClickable(By.id("idbtneditprofile"),15);
+        builder.moveToElement(driver.findElement(By.id("idbtneditprofile"))).perform();
         driver.findElement(By.id("idbtneditprofile")).click();
-        Thread.sleep(2000);
+        waitUntilElementClickable(By.id("typeuser3inprofile"),15);
         driver.findElement(By.id("typeuser3inprofile")).click();
-        Thread.sleep(2000);
+        waitUntilElemAttrContainsText(By.id("typeuser3inprofile"),
+                "class","active",5);
         driver.findElement(By.id("idbtnsaveprofile")).click();
-        Thread.sleep(3000);
+        waitUntilElementClickable(By.id("idbtneditprofile"),20);
 
         //----------------user rights verification: '+' has to be unavailable ----------
         driver.findElement(By.id("ihome")).click();
-        Thread.sleep(4000);
+        waitUntilElementClickable(By.xpath("//span[@id='typeviewsearchcalendar']"),10);
         System.out.println("FamilyAndGuest, + is  displayed: " + driver.findElement(By.id("idcontainerbtnaddevent")).isDisplayed());
         Assert.assertTrue(driver.findElement(By.id("idcontainerbtnaddevent")).isDisplayed());
     }

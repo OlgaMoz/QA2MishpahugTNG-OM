@@ -19,7 +19,8 @@ public class TestBase {
         driver = new ChromeDriver();
         driver.get("https://mishpahug.co.il/");
         driver.findElement(By.id("closedIntro")).click();
-        Thread.sleep(4000);
+        //Thread.sleep(4000);
+        //waitUntilElementClickable(By.id("idsignin"),20);
     }
 
     @AfterMethod
@@ -44,7 +45,6 @@ public class TestBase {
             e.printStackTrace();
         }
     }
-
     public void waitUntilElemAttrContainsText(By locator, String attribute, String value, int time){
         try {
             new WebDriverWait(driver,time)
@@ -53,4 +53,15 @@ public class TestBase {
             e.printStackTrace();
         }
     }
+
+    public void waitUntilElemContainsText(By locator, String value, int time){
+        try {
+            new WebDriverWait(driver,time)
+                    .until(ExpectedConditions.textToBePresentInElementLocated(locator,value));
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 }
